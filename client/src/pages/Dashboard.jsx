@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
-import { FiPlay, FiTrendingUp, FiAward, FiClock } from "react-icons/fi"
+import { FiPlay, FiTrendingUp, FiAward, FiClock, FiChevronDown } from "react-icons/fi"
 import axios from "axios"
 import toast from "react-hot-toast"
+import { motion, AnimatePresence } from "framer-motion"
 
 const Dashboard = () => {
   const { user } = useAuth()
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [recentInterviews, setRecentInterviews] = useState([])
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const difficulties = ["Easy", "Medium", "Hard"]
 
@@ -143,20 +145,41 @@ const Dashboard = () => {
 
             <div className="space-y-6">
               {/* Domain */}
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium mb-2">Select Domain</label>
-                <select
-                  value={selectedDomain}
-                  onChange={(e) => setSelectedDomain(e.target.value)}
-                  className="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                <button
+                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 flex justify-between items-center focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
                 >
-                  <option value="">Choose a domain...</option>
-                  {domains.map((domain) => (
-                    <option key={domain} value={domain}>
-                      {domain}
-                    </option>
-                  ))}
-                </select>
+                  {selectedDomain || "Choose a domain..."}
+                  <FiChevronDown className={`ml-2 transform transition ${dropdownOpen ? "rotate-180" : ""}`} />
+                </button>
+
+                <AnimatePresence>
+                  {dropdownOpen && (
+                    <motion.ul
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10 overflow-hidden"
+                    >
+                      {domains.map((domain) => (
+                        <motion.li
+                          key={domain}
+                          onClick={() => {
+                            setSelectedDomain(domain)
+                            setDropdownOpen(false)
+                          }}
+                          whileHover={{ backgroundColor: "#f3f4f6" }}
+                          className="px-4 py-2 cursor-pointer text-gray-700 hover:text-gray-900"
+                        >
+                          {domain}
+                        </motion.li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Difficulty */}
@@ -206,7 +229,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Right Side */}
+        {/* Right Side — same as before */}
         <div className="space-y-6">
           {/* Recent Interviews */}
           <div className="bg-white shadow-md rounded-xl p-6">
