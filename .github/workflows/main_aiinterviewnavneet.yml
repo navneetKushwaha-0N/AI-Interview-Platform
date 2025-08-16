@@ -25,10 +25,17 @@ jobs:
       - name: Build Client
         run: |
           npm install
-          npm run build --if-present
+          npm run build
         working-directory: ./client
 
-      # Step 2: Install server dependencies
+      # Step 2: Copy client build to server/public
+      - name: Copy Client Build to Server
+        run: |
+          rm -rf ./server/public   # clear old build
+          mkdir -p ./server/public
+          cp -r ./client/dist/* ./server/public/
+
+      # Step 3: Install server dependencies
       - name: Install Server Dependencies
         run: |
           npm install --production
@@ -68,4 +75,4 @@ jobs:
         with:
           app-name: 'AIInterviewNavneet'
           slot-name: 'Production'
-          package: .
+          package: ./server
