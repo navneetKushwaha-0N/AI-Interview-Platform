@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Windows se ubuntu mein badla gaya, aamtaur par tez hota hai
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -21,19 +21,19 @@ jobs:
         with:
           node-version: '22.x'
 
-      # Step 1: Client ko build karein
+      # Step 1: Build client
       - name: Build Client
         run: |
           npm install
           npm run build --if-present
         working-directory: ./client
 
-      # Step 2: Server ki dependencies install karein
+      # Step 2: Install server dependencies
       - name: Install Server Dependencies
         run: |
           npm install --production
         working-directory: ./server
-      
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -47,22 +47,22 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # Required for OIDC login
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9E6EFDCF6C6D4F2F85D2C9B2BCECF493 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E1CBC7F391DB4811B67EC99F5AD25519 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_59BAE73D842643A1805A4729A6EDCB92 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
