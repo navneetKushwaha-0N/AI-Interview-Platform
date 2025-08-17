@@ -33,7 +33,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["aiinterviewprep-g7agd0aqdbfna0dv.westindia-01.azurewebsites.net"] // 👈 Azure frontend domain
+        ? ["aiinterviewnavneet-fdh0gqb6dkgkdyb6.westindia-01.azurewebsites.net"] // 👈 Azure frontend domain
         : ["http://localhost:5173", "http://localhost:3000"],
     credentials: true,
   })
