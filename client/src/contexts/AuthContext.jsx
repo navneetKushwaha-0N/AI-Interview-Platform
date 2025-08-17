@@ -14,7 +14,11 @@ export const useAuth = () => {
   return context
 }
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api"
+// ✅ API URL setup (env se lega, warna Azure ka fallback)
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://aiinterviewnavneet-fdh0gqb6dkgkdyb6.westindia-01.azurewebsites.net/api"
+
 axios.defaults.baseURL = API_URL
 
 export const AuthProvider = ({ children }) => {
@@ -56,7 +60,7 @@ export const AuthProvider = ({ children }) => {
         const { token, user: userData } = res.data
         setAuthToken(token)
         setUser(userData)
-        localStorage.setItem("user", JSON.stringify(userData)) // ✅ Store user
+        localStorage.setItem("user", JSON.stringify(userData))
         toast.success("Login successful!")
         return { success: true }
       }
@@ -78,7 +82,7 @@ export const AuthProvider = ({ children }) => {
         const { token, user: userData } = res.data
         setAuthToken(token)
         setUser(userData)
-        localStorage.setItem("user", JSON.stringify(userData)) // ✅ Store user
+        localStorage.setItem("user", JSON.stringify(userData))
         toast.success("Account created successfully!")
         return { success: true }
       }
@@ -94,14 +98,14 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setAuthToken(null)
     setUser(null)
-    localStorage.removeItem("user") // ✅ Clear user
+    localStorage.removeItem("user")
     toast.success("Logged out successfully")
   }
 
   const updateUserStats = (newStats) => {
     setUser((prev) => {
       const updatedUser = { ...prev, ...newStats }
-      localStorage.setItem("user", JSON.stringify(updatedUser)) // ✅ Update in storage
+      localStorage.setItem("user", JSON.stringify(updatedUser))
       return updatedUser
     })
   }
