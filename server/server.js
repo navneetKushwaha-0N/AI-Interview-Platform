@@ -1,64 +1,94 @@
-import express from "express"
-import cors from "cors"
-import dotenv from "dotenv"
-import rateLimit from "express-rate-limit"
-import connectDB from "./config/db.js"
-import authRoutes from "./routes/auth.js"
-import interviewRoutes from "./routes/interview.js"
-import progressRoutes from "./routes/progress.js"
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import rateLimit from "express-rate-limit";
 
-dotenv.config()
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/auth.js";
+import interviewRoutes from "./routes/interview.js";
+import progressRoutes from "./routes/progress.js";
 
-const app = express()
-const PORT = process.env.PORT || 4000
+dotenv.config();
 
-// Connect to MongoDB
-connectDB()
+const app = express();
+const PORT = process.env.PORT || 4000;
 
-// Rate limiting
+// Connect MongoDB
+connectDB();
+
+
+// Rate limiter
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-})
+  windowMs: 15 * 60 * 1000,
+  max: 100
+});
 
-// Middleware
-app.use(limiter)
+app.use(limiter);
+
+
+// CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://ai-interview-platform-frontendd.onrender.com"
+];
+
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? ["https://your-frontend-domain.vercel.app"]
-        : ["http://localhost:5173", "http://localhost:3000"],
-    credentials: true,
-  }),
-)
-app.use(express.json({ limit: "10mb" }))
-app.use(express.urlencoded({ extended: true }))
+    origin: function (origin, callback) {
+
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
+  })
+);
+
+
+// Body parser
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
+
 
 // Routes
-app.use("/api/auth", authRoutes)
-app.use("/api/interview", interviewRoutes)
-app.use("/api/progress", progressRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/interview", interviewRoutes);
+app.use("/api/progress", progressRoutes);
+
 
 // Health check
 app.get("/api/health", (req, res) => {
-  res.json({ message: "AI Interview Platform API is running!" })
-})
+  res.json({
+    status: "success",
+    message: "AI Interview Platform API running"
+  });
+});
 
-// Error handling middleware
+
+// 404 route
+app.use((req, res) => {
+  res.status(404).json({
+    message: "API route not found"
+  });
+});
+
+
+// Global error handler
 app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).json({
-    message: "Something went wrong!",
-    error: process.env.NODE_ENV === "development" ? err.message : {},
-  })
-})
+  console.error("Server Error:", err);
 
-// 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({ message: "Route not found" })
-})
+  res.status(500).json({
+    message: "Internal Server Error",
+    error: process.env.NODE_ENV === "development" ? err.message : undefined
+  });
+});
+
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});

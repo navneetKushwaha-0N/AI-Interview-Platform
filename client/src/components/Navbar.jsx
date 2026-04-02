@@ -2,7 +2,7 @@
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { useState } from "react"
-import { FiUser, FiLogOut, FiHome, FiBarChart, FiMessageSquare, FiMenu, FiX } from "react-icons/fi"
+import { FiUser, FiLogOut, FiHome, FiBarChart, FiMenu, FiX } from "react-icons/fi"
 
 const Navbar = () => {
   const { user, logout } = useAuth()
@@ -17,10 +17,14 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
-              <FiMessageSquare className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-lg sm:text-xl font-bold text-gray-900">AI Interview Prep</span>
+            <img
+              src="/vite.svg"
+              alt="AI Interview Prep Logo"
+              className="w-9 h-9"
+            />
+            <span className="text-lg sm:text-xl font-bold text-gray-900">
+              Interview Prep
+            </span>
           </Link>
 
           {/* Mobile Menu Button */}
