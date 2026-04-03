@@ -1,4 +1,3 @@
-"use client"
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { useState } from "react"
@@ -12,128 +11,157 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path
 
   return (
-    <nav className="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 backdrop-blur-2xl bg-white/10 border-b border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+
+      {/* Glass highlight layer */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/5 to-transparent pointer-events-none"></div>
+
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+
         <div className="flex justify-between items-center h-16">
+
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <img
-              src="/vite.svg"
-              alt="AI Interview Prep Logo"
-              className="w-9 h-9"
-            />
-            <span className="text-lg sm:text-xl font-bold text-gray-900">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 hover:scale-105 transition"
+          >
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+              <span className="text-white font-bold">AI</span>
+            </div>
+
+            <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
               Interview Prep
             </span>
           </Link>
 
-          {/* Mobile Menu Button */}
+
+          {/* Mobile Button */}
           <button
-            className="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition"
+            className="lg:hidden p-2 rounded-md text-gray-700 hover:bg-white/20 transition"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+            {isOpen ? <FiX size={22}/> : <FiMenu size={22}/>}
           </button>
+
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-4">
+
             {user ? (
               <>
+
+                {/* Dashboard */}
                 <Link
                   to="/dashboard"
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition ${
                     isActive("/dashboard")
-                      ? "bg-blue-100 text-blue-700"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                      ? "bg-white/30 text-indigo-700 backdrop-blur-lg"
+                      : "text-gray-700 hover:bg-white/20"
                   }`}
                 >
-                  <FiHome className="w-4 h-4" />
+                  <FiHome/>
                   <span>Dashboard</span>
                 </Link>
 
+
+                {/* Progress */}
                 <Link
                   to="/progress"
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition ${
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition ${
                     isActive("/progress")
-                      ? "bg-blue-100 text-blue-700"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                      ? "bg-white/30 text-indigo-700 backdrop-blur-lg"
+                      : "text-gray-700 hover:bg-white/20"
                   }`}
                 >
-                  <FiBarChart className="w-4 h-4" />
+                  <FiBarChart/>
                   <span>Progress</span>
                 </Link>
 
-                {/* User Info */}
-                <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-gray-200">
+
+                {/* User */}
+                <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-white/20">
+
                   <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <FiUser className="w-4 h-4 text-blue-600" />
+
+                    <div className="w-9 h-9 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/40">
+                      <FiUser className="text-white text-sm"/>
                     </div>
-                    <span className="text-sm font-medium text-gray-700">{user.name}</span>
+
+                    <span className="text-sm font-medium text-gray-800">
+                      {user.name}
+                    </span>
+
                   </div>
+
 
                   <button
                     onClick={logout}
-                    className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition"
+                    className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-white/20 rounded-lg transition"
                   >
-                    <FiLogOut className="w-4 h-4" />
+                    <FiLogOut/>
                     <span>Logout</span>
                   </button>
+
                 </div>
+
               </>
             ) : (
+
               <div className="flex items-center space-x-3">
+
                 <Link
                   to="/login"
-                  className="text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100 transition"
+                  className="text-sm font-medium text-gray-700 hover:bg-white/20 px-4 py-2 rounded-lg transition"
                 >
                   Login
                 </Link>
+
+
                 <Link
                   to="/signup"
-                  className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm transition-transform transform hover:scale-105"
+                  className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-5 py-2 rounded-lg text-sm font-medium shadow-lg hover:shadow-indigo-500/40 hover:scale-105 transition"
                 >
                   Sign Up
                 </Link>
+
               </div>
+
             )}
+
           </div>
         </div>
       </div>
 
+
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200 px-4 py-3 space-y-2 shadow-md animate-fadeIn">
+
+        <div className="lg:hidden backdrop-blur-2xl bg-white/20 border-t border-white/20 px-4 py-3 space-y-2 shadow-lg">
+
           {user ? (
             <>
               <Link
                 to="/dashboard"
                 onClick={() => setIsOpen(false)}
-                className={`block px-3 py-2 rounded-md text-sm font-medium ${
-                  isActive("/dashboard")
-                    ? "bg-blue-100 text-blue-700"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                }`}
+                className="block px-3 py-2 rounded-lg text-sm text-gray-800 hover:bg-white/20"
               >
                 Dashboard
               </Link>
+
               <Link
                 to="/progress"
                 onClick={() => setIsOpen(false)}
-                className={`block px-3 py-2 rounded-md text-sm font-medium ${
-                  isActive("/progress")
-                    ? "bg-blue-100 text-blue-700"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                }`}
+                className="block px-3 py-2 rounded-lg text-sm text-gray-800 hover:bg-white/20"
               >
                 Progress
               </Link>
+
               <button
                 onClick={() => {
                   logout()
                   setIsOpen(false)
                 }}
-                className="w-full text-left px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                className="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-800 hover:bg-white/20"
               >
                 Logout
               </button>
@@ -143,21 +171,25 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                className="block px-3 py-2 rounded-lg text-sm text-gray-800 hover:bg-white/20"
               >
                 Login
               </Link>
+
               <Link
                 to="/signup"
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-2 rounded-md text-sm font-medium bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white"
+                className="block px-3 py-2 rounded-lg text-sm bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
               >
                 Sign Up
               </Link>
             </>
           )}
+
         </div>
+
       )}
+
     </nav>
   )
 }

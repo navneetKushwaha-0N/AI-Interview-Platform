@@ -1,7 +1,18 @@
 "use client"
+
 import { Link } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
-import { FiArrowRight, FiZap, FiTarget, FiTrendingUp, FiUsers, FiCode, FiDatabase, FiServer, FiCloud } from "react-icons/fi"
+import {
+  FiArrowRight,
+  FiZap,
+  FiTarget,
+  FiTrendingUp,
+  FiUsers,
+  FiCode,
+  FiDatabase,
+  FiServer,
+  FiCloud,
+} from "react-icons/fi"
 import { motion } from "framer-motion"
 
 const Landing = () => {
@@ -43,194 +54,201 @@ const Landing = () => {
 
   const handleSelectDomain = (domain) => {
     console.log("Selected domain:", domain)
-    // Add navigation or domain-specific logic here
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center text-white">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight"
-          >
-            Master Your <span className="text-amber-300">Next Interview</span>
-          </motion.h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white overflow-hidden">
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-100 max-w-2xl mx-auto mb-8"
-          >
-            AI-generated questions, instant feedback, and personalized learning paths to make you interview-ready.
-          </motion.p>
+      {/* HERO */}
+      <section className="relative py-28">
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            {user ? (
-              <Link
-                to="/dashboard"
-                className="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-lg flex items-center justify-center transition-transform hover:scale-105"
-              >
-                Go to Dashboard
-                <FiArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            ) : (
-              <>
+        {/* Glow background */}
+        <div className="absolute top-10 left-20 w-72 h-72 bg-purple-500/30 blur-3xl rounded-full"></div>
+        <div className="absolute bottom-10 right-20 w-72 h-72 bg-pink-500/30 blur-3xl rounded-full"></div>
+
+        <div className="relative max-w-6xl mx-auto px-6">
+
+          <div className="backdrop-blur-xl bg-white/10 border border-white/30 shadow-2xl rounded-3xl p-14 text-center">
+
+            <motion.h1
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-6xl font-extrabold mb-6"
+            >
+              Master Your{" "}
+              <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+                Next Interview
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-lg text-gray-700 max-w-2xl mx-auto mb-10"
+            >
+              AI generated questions, instant feedback and personalized learning paths to make you interview ready.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              {user ? (
                 <Link
-                  to="/signup"
-                  className="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-lg flex items-center justify-center transition-transform hover:scale-105"
+                  to="/dashboard"
+                  className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-amber-400/40 hover:scale-105 transition flex items-center"
                 >
-                  Start Practicing
-                  <FiArrowRight className="ml-2 w-5 h-5" />
+                  Go to Dashboard
+                  <FiArrowRight className="ml-2" />
                 </Link>
-                <Link
-                  to="/login"
-                  className="bg-white/20 backdrop-blur-lg border border-white/40 text-white hover:bg-white/30 px-8 py-3 rounded-lg shadow-md transition-transform hover:scale-105"
-                >
-                  Login
-                </Link>
-              </>
-            )}
-          </motion.div>
+              ) : (
+                <>
+                  <Link
+                    to="/signup"
+                    className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-amber-400/40 hover:scale-105 transition flex items-center"
+                  >
+                    Start Practicing
+                    <FiArrowRight className="ml-2" />
+                  </Link>
+
+                  <Link
+                    to="/login"
+                    className="backdrop-blur-lg bg-white/30 border border-white/40 px-8 py-3 rounded-xl hover:bg-white/40 transition"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Us?
+      {/* FEATURES */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">
+              Why Choose Us
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+
+            <p className="text-gray-600">
               A modern platform combining AI innovation with proven preparation methods.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
             {features.map((feature, index) => (
+
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white backdrop-blur-lg border border-gray-200 rounded-2xl p-6 text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all"
+                whileHover={{ y: -8 }}
+                className="backdrop-blur-xl bg-white/70 border border-white/30 rounded-2xl p-7 shadow-lg hover:shadow-2xl transition"
               >
-                <div className="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="w-7 h-7 text-indigo-600" />
+                <div className="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-5">
+                  <feature.icon className="text-indigo-600 w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+
+                <h3 className="text-xl font-semibold mb-2">
+                  {feature.title}
+                </h3>
+
+                <p className="text-gray-600 text-sm">
+                  {feature.description}
+                </p>
               </motion.div>
+
             ))}
+
           </div>
         </div>
       </section>
 
-      {/* Choose Domain */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-          >
+      {/* DOMAIN SECTION */}
+      <section className="py-24 bg-gray-50">
+
+        <div className="max-w-6xl mx-auto px-6 text-center">
+
+          <h2 className="text-4xl font-bold mb-4">
             Choose Your Domain
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-gray-600 max-w-2xl mx-auto mb-12"
-          >
-            Select a domain to get AI-powered interview questions tailored just for you.
-          </motion.p>
+          </h2>
+
+          <p className="text-gray-600 mb-14">
+            Select a domain to get AI powered interview questions tailored for you.
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+
             {domains.map((domain, index) => (
+
               <motion.div
                 key={domain.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05, rotate: 1 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => handleSelectDomain(domain.title)}
-                className={`cursor-pointer bg-gradient-to-br ${domain.color} p-[1px] rounded-2xl shadow-lg`}
+                className={`cursor-pointer bg-gradient-to-br ${domain.color} p-[1px] rounded-2xl shadow-xl`}
               >
-                <div className="bg-white rounded-2xl p-6 flex flex-col items-center h-full hover:bg-white/80 transition-all duration-300">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mb-4">
-                    <domain.icon className="w-7 h-7 text-gray-800" />
+
+                <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 h-full flex flex-col items-center hover:bg-white/90 transition">
+
+                  <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center mb-4">
+                    <domain.icon className="text-gray-800 w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">{domain.title}</h3>
+
+                  <h3 className="font-semibold text-lg">
+                    {domain.title}
+                  </h3>
+
                 </div>
+
               </motion.div>
+
             ))}
+
           </div>
         </div>
+
       </section>
 
       {/* CTA */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 skew-y-3 transform origin-bottom-left" />
-        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-white mb-6"
-          >
-            Ready to Ace Your Interview?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-lg text-gray-100 mb-8"
-          >
-            Join thousands of developers leveling up with AI-powered preparation.
-          </motion.p>
-          {!user && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
+      <section className="py-24 relative">
+
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-90"></div>
+
+        <div className="relative max-w-4xl mx-auto px-6">
+
+          <div className="backdrop-blur-xl bg-white/10 border border-white/30 rounded-3xl p-14 text-center shadow-2xl">
+
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Ready to Ace Your Interview
+            </h2>
+
+            <p className="text-gray-200 mb-8">
+              Join thousands of developers leveling up with AI powered preparation.
+            </p>
+
+            {!user && (
               <Link
                 to="/signup"
-                className="bg-amber-400 text-gray-900 hover:bg-amber-500 font-semibold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105 inline-flex items-center"
+                className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition inline-flex items-center"
               >
                 Get Started Free
-                <FiArrowRight className="ml-2 w-5 h-5" />
+                <FiArrowRight className="ml-2" />
               </Link>
-            </motion.div>
-          )}
+            )}
+
+          </div>
+
         </div>
+
       </section>
+
     </div>
   )
 }
